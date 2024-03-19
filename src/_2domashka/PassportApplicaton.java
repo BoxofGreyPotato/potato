@@ -58,7 +58,7 @@ public class PassportApplicaton {
 
     public static void main(String[] args) {
 
-
+        System.out.println("Салахов Айдар Ильдарович РИБО-04-22 4 вариант");
         System.out.println("Добавление пропуска. Напишите номер пропуска, ФИО, должность через Enter");
         addPassport();
 
