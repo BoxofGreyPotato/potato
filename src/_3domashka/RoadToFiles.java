@@ -4,6 +4,7 @@ package _3domashka;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
@@ -27,6 +28,15 @@ public class RoadToFiles {
             return new byte[]{};
         }
     }
+    public static void getDirectory(File file) {
+        if (file.isDirectory()) {
+            String path = file.getAbsolutePath();
+            arrayList.add(path);
+            getDirectory(new File(path));
+        } else {
+            return;
+        }
+    }
     /*public static void writeStringToFile(String path, String str) throws IOException {
         FileWriter fw= new FileWriter(path);
         fw.write(str);
@@ -34,6 +44,7 @@ public class RoadToFiles {
     }*/
 
     public static Scanner input = new Scanner(System.in);
+    public static ArrayList<String> arrayList = new ArrayList<>();
     public static void main(String[] args) {
 
         System.out.println("Напишите каталог ");
@@ -47,29 +58,20 @@ public class RoadToFiles {
         //System.out.println(STR."Exist \{isExistFile}");
 
         File dirs = new File(path);
-        String [] arrDirs = dirs.list();
         File[] arrFiles = dirs.listFiles();
+        assert arrFiles != null;
+
         //System.out.println(Arrays.toString(arrDirs));
         //System.out.println(Arrays.toString(arrFiles));
 
-        for(int i = 0; i< Objects.requireNonNull(arrDirs).length; i++){
-            boolean contains = arrDirs[i].contains(".");
-            if(arrDirs[i].endsWith(extensione)  && contains){
-                assert arrFiles != null;
+        for(int i = 0; i< Objects.requireNonNull(arrFiles).length; i++){
+            if(arrFiles[i].isFile()){
                 String res = String.valueOf(arrFiles[i]);
-
-                try{
-                    byte[] arr = RoadToFiles.readBytesFromFile(path + "\\" + arrDirs[i]);
-
-                    res +=" " + arr.length;
-                    System.out.println(res);
-
-                } catch (IOException exception){
-                    System.out.println(exception.getMessage());
+                arrayList.add(res);
                 }
-
+            else{
+                getDirectory(dirs);
             }
-
 
         }
 
